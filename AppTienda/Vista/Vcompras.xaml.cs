@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AppTienda.VistaModelo;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,7 @@ namespace AppTienda.Vista
         public Vcompras()
         {
             InitializeComponent();
+            BindingContext = new VMcompras(Navigation, productosLista);
         }
     }
 }

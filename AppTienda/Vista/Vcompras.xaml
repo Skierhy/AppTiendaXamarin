@@ -1,12 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AppTienda.Vista.Vcompras">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+             x:Class="AppTienda.Vista.Vcompras"
+             NavigationPage.HasNavigationBar="False">
+    <StackLayout Background="#c0daed">
+        <Grid RowDefinitions="*,100" VerticalOptions="FillAndExpand">
+            
+            <ScrollView>
+                <Grid RowDefinitions="100,*">
+                    <StackLayout>
+                        <Frame CornerRadius="10" Background="#899be6" Margin="10,10">
+                            <Label Text="Refacciones de automoviles" FontSize="24" TextColor="#120907" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Frame>
+                    </StackLayout>
+                    <StackLayout x:Name="productosLista" Grid.Row="1">
+                        <!--<Frame CornerRadius="10" BackgroundColor="#4f5a85" HeightRequest="150" Margin="15" Padding="0">
+                            <Grid ColumnDefinitions="150,*">
+                                <StackLayout VerticalOptions="Center">
+                                    <Image Source="https://www.arkatools.com.mx/productos/big/Llave-Allen-set-964622.jpg" HeightRequest="120"/>
+                                </StackLayout>
+                                <StackLayout  VerticalOptions="Center" Grid.Column="1">
+                                    <Label Text="Llave allen" FontSize="18" CharacterSpacing="1" TextColor="#fffaf2" FontAttributes="Bold"/>
+                                    <Label Text="$22.00" TextColor="#c0daed" FontSize="22" FontAttributes="Bold"/>
+                                    <Label Text="3 Unidades" TextColor="#dee4ed" FontAttributes="Italic" FontSize="10"/>
+                                </StackLayout>
+                            </Grid>
+                        </Frame>-->
+                    </StackLayout>
+                </Grid>
+            </ScrollView>
+
+            <Frame Grid.Row="1" Background="#1b1f34" CornerRadius="10" Margin="5,5">
+                
+            </Frame>
+        </Grid>
+    </StackLayout>
 </ContentPage>

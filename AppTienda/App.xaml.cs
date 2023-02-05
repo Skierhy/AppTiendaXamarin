@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AppTienda.Vista;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,7 +11,7 @@ namespace AppTienda
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new NavigationPage( new Vcompras());
         }
 
         protected override void OnStart()
