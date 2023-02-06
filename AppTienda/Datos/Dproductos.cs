@@ -23,6 +23,24 @@ namespace AppTienda.Datos
                     }
             ).ToList();
         }
-        
+
+        public async Task<List<Mproductos>> MostrarProductosID(Mproductos enviarProductos)
+        {
+            return (
+                await Cconexion.conexionFireBase
+                .Child("Productos")
+                .OnceAsync<Mproductos>())
+                .Where(dato => dato.Key == enviarProductos.IdProducto)
+                .Select(item => new Mproductos
+                {
+                    Descripcion = item.Object.Descripcion,
+                    ImgProducto = item.Object.ImgProducto,
+                    Precio = item.Object.Precio,
+                    Unidad = item.Object.Unidad,
+                    IdProducto = item.Key
+                }
+            ).ToList();
+        }
+
     }
 }

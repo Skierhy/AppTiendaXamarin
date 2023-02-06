@@ -13,10 +13,18 @@ namespace AppTienda.Vista
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Vcompras : ContentPage
     {
+        VMcompras vm;
         public Vcompras()
         {
             InitializeComponent();
-            BindingContext = new VMcompras(Navigation, productosLista);
+            vm = new VMcompras(Navigation, productosLista);
+            BindingContext = vm;
+            this.Appearing += Vcompras_Appearing;
+        }
+
+        private async void Vcompras_Appearing(object sender, EventArgs e)
+        {
+            await vm.MostrarTotal();
         }
     }
 }

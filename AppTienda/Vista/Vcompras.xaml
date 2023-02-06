@@ -2,15 +2,22 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppTienda.Vista.Vcompras"
-             NavigationPage.HasNavigationBar="False">
-    <StackLayout Background="#c0daed">
+             NavigationPage.HasNavigationBar="False"
+             xmlns:sharedTransitions="clr-namespace:Plugin.SharedTransitions;assembly=Plugin.SharedTransitions"
+             >
+    <!--.color1 {color: #140f07;}
+    .color2 {color: #262531;}
+    .color3 {color: #565b77;}
+    .color4 {color: #9292c6;}
+    .color5 {color: #dbd4f6;}-->
+    <StackLayout Background="#dbd4f6">
         <Grid RowDefinitions="*,100" VerticalOptions="FillAndExpand">
             
             <ScrollView>
                 <Grid RowDefinitions="100,*">
                     <StackLayout>
-                        <Frame CornerRadius="10" Background="#899be6" Margin="10,10">
-                            <Label Text="Refacciones de automoviles" FontSize="24" TextColor="#120907" HorizontalOptions="Center" VerticalOptions="Center" />
+                        <Frame CornerRadius="10" Background="#565b77" Margin="10,10">
+                            <Label Text="Refacciones de automoviles" FontSize="24" TextColor="#dbd4f6" HorizontalOptions="Center" VerticalOptions="Center" />
                         </Frame>
                     </StackLayout>
                     <StackLayout x:Name="productosLista" Grid.Row="1">
@@ -30,8 +37,14 @@
                 </Grid>
             </ScrollView>
 
-            <Frame Grid.Row="1" Background="#1b1f34" CornerRadius="10" Margin="5,5">
-                
+            <Frame Grid.Row="1" Background="#262531" CornerRadius="10" Margin="5,5">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="{Binding StringTotalProductos}" FontSize="30" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="StartAndExpand"
+                           TextColor="#dbd4f6"/>
+
+                    <Label Text="Cantidad: " FontSize="20" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="End"
+                           TextColor="#9292c6" sharedTransitions:Transition.Group="producto" sharedTransitions:Transition.Name="producto"/>
+                </StackLayout>
             </Frame>
         </Grid>
     </StackLayout>
