@@ -134,7 +134,7 @@ namespace AppTienda.VistaModelo
             {
                 CornerRadius = 10,
                 BackgroundColor = Color.FromHex("#9292c6"),
-                HeightRequest = 170,
+                HeightRequest = 150,
                 Margin = 15,
                 Padding = 0,
             };
