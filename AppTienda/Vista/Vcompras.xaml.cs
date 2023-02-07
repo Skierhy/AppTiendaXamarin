@@ -25,6 +25,17 @@ namespace AppTienda.Vista
         private async void Vcompras_Appearing(object sender, EventArgs e)
         {
             await vm.MostrarTotal();
+            await vm.MostrarCarrito();
+        }
+
+        private async void SwipeCarrito(object sender, SwipedEventArgs e)
+        {
+            await vm.MostrarCarrito(Gmain, fTotal,detallesDeCarrito);
+        }
+
+        private async void SwipeCompras(object sender, SwipedEventArgs e)
+        {
+            await vm.MostrarCompras(Gmain, fTotal, detallesDeCarrito);
         }
     }
 }

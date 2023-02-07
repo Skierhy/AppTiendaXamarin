@@ -42,5 +42,11 @@ namespace AppTienda.Datos
             ).ToList();
         }
 
+        public async Task ComprarCarrito()
+        {
+            await Cconexion.conexionFireBase
+                .Child("CompraCarrito")
+                .DeleteAsync();
+        }
     }
 }

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Plugin.SharedTransitions;
+using static Xamarin.Essentials.Permissions;
 
 namespace AppTienda.VistaModelo
 {
@@ -16,27 +17,64 @@ namespace AppTienda.VistaModelo
         #region VARIABLES
         List<Mproductos> _ListaProductos;
         List<McompraCarrito> _ListaCompraCarritoTotal;
+        List<McompraCarrito> _ListaCompraCarrito;
         double totalProductos =0;
-        string _stringTotalProductos = "Total: $ 0";
+        double compra = 0;
+        int _Cantidad;
+        string _stringTotalProductos = "Subtotal: $ 0";
+        string _stringCompra = "$ 0";
+        string _stringEnvio = "$ 0";
+        bool _VisibleCarrito;
+        bool _VisibleCompras;
         #endregion
         #region CONSTRUCTOR
         public VMcompras(INavigation navigation, StackLayout StackLayout1)
         {
             Navigation = navigation;
             MostrarProductos(StackLayout1);
+            VisibleCarrito = false;
+            VisibleCompras = true;
         }
         #endregion
         #region OBJETOS
+
+        public string StringCompra
+        {
+            get { return _stringCompra; }
+            set { SetValue(ref _stringCompra, value); }
+        }
+        public string StringEnvio
+        {
+            get { return _stringEnvio; }
+            set { SetValue(ref _stringEnvio, value); }
+        }
         public List<Mproductos> ListaProductos
         {
             get { return _ListaProductos; }
             set { SetValue(ref _ListaProductos, value); }
         }
 
+        public int Cantidad
+        {
+            get { return _Cantidad; }
+            set { SetValue(ref _Cantidad, value); }
+        }
         public string StringTotalProductos
         {
             get { return _stringTotalProductos; }
             set { SetValue(ref _stringTotalProductos, value); }
+        }
+
+        public bool VisibleCarrito
+        {
+            get { return _VisibleCarrito; }
+            set { SetValue(ref _VisibleCarrito, value); }
+        }
+
+        public bool VisibleCompras
+        {
+            get { return _VisibleCompras; }
+            set { SetValue(ref _VisibleCompras, value); }
         }
 
 
@@ -45,9 +83,41 @@ namespace AppTienda.VistaModelo
             get { return _ListaCompraCarritoTotal; }
             set { SetValue(ref _ListaCompraCarritoTotal, value); }
         }
+
+        public List<McompraCarrito> ListaCompraCarrito
+        {
+            get { return _ListaCompraCarrito; }
+            set { SetValue(ref _ListaCompraCarrito, value); }
+        }
         #endregion
         #region PROCESOS
 
+        public async Task MostrarCarrito() {
+            var funcion = new DcompraCarrito();
+            ListaCompraCarrito = await funcion.MostrarCarrito();
+        }
+
+        public  async Task  MostrarCarrito(Grid Gmain, Frame fTotal, StackLayout detallesDeCarrito)
+        {
+            await Task.WhenAll(
+                fTotal.FadeTo(0, 500),
+                Gmain.TranslateTo(0, -1000, 500, Easing.CubicIn),
+                detallesDeCarrito.TranslateTo(0, 0, 500, Easing.CubicIn)
+                );
+            VisibleCompras = false;
+            VisibleCarrito = true;
+        }
+
+        public async Task MostrarCompras(Grid Gmain, Frame fTotal, StackLayout detallesDeCarrito)
+        {
+            await Task.WhenAll(
+                fTotal.FadeTo(1, 500),
+                Gmain.TranslateTo(0, 0, 500, Easing.CubicIn),
+                detallesDeCarrito.TranslateTo(0, 1000, 500, Easing.CubicIn)
+                );
+            VisibleCompras = true;
+            VisibleCarrito = false;
+        }
         public async Task MostrarProductos(StackLayout StackLayout1)
         {
             var funcion = new Dproductos();
@@ -145,22 +215,45 @@ namespace AppTienda.VistaModelo
             var funcion = new DcompraCarrito();
             ListaCompraCarritoTotal = await funcion.MostrarTotal();
             totalProductos = 0;
+            Cantidad = 0;
+            compra = 0;
             foreach (var item in ListaCompraCarritoTotal)
             {
-                totalProductos += Convert.ToDouble( item.PrecioProducto);
+                totalProductos += Convert.ToDouble( item.Total);
+                Cantidad++;
             }
-            StringTotalProductos = "Total: $ " + totalProductos;
+            StringTotalProductos = "Subtotal $ " + totalProductos;
 
-
+            if (totalProductos >= 5000) {
+                StringCompra = "$ " + totalProductos;
+                StringEnvio = "Gratis";
+            }else if (totalProductos < 5000)
+            {
+                if (Cantidad >= 1) {
+                    compra = totalProductos + 2000;
+                    StringCompra = "$ " + compra;
+                    StringEnvio = "$2000";
+                }
+                
+            }
         }
-        public void ProcesoSimple()
+        public async Task ComprarCarrito()
         {
-
+            if(Cantidad == 0)
+            {
+                await Navigation.PushAsync(new Verror());
+            }
+            else {
+                var funcion = new Dproductos();
+                await funcion.ComprarCarrito();
+                await Navigation.PushAsync(new Vfinalizado());
+            }
+            
         }
         #endregion
         #region COMANDOS
         public ICommand ProcesoAsyncommand => new Command(async () => await MostrarTotal());
-        public ICommand ProcesoSimpcommand => new Command(ProcesoSimple);
+        public ICommand ComprarAsyncommand => new Command(async () => await ComprarCarrito());
         #endregion
     }
 }

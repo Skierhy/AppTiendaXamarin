@@ -11,8 +11,8 @@
     .color4 {color: #9292c6;}
     .color5 {color: #dbd4f6;}-->
     <StackLayout Background="#dbd4f6">
-        <Grid RowDefinitions="*,100" VerticalOptions="FillAndExpand">
-            
+        <Grid RowDefinitions="*,100" VerticalOptions="FillAndExpand" x:Name="Gmain" IsVisible="{Binding VisibleCompras}">
+
             <ScrollView>
                 <Grid RowDefinitions="100,*">
                     <StackLayout>
@@ -37,15 +37,71 @@
                 </Grid>
             </ScrollView>
 
-            <Frame Grid.Row="1" Background="#262531" CornerRadius="10" Margin="5,5">
+            <Frame Grid.Row="1" Background="#262531" CornerRadius="10" Margin="5,5" x:Name="fTotal">
                 <StackLayout Orientation="Horizontal">
                     <Label Text="{Binding StringTotalProductos}" FontSize="30" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="StartAndExpand"
                            TextColor="#dbd4f6"/>
 
-                    <Label Text="Cantidad: " FontSize="20" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="End"
-                           TextColor="#9292c6" sharedTransitions:Transition.Group="producto" sharedTransitions:Transition.Name="producto"/>
+                    <Label Text="{Binding Cantidad}" FontSize="20" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="End"
+                           TextColor="#262531" BackgroundColor="#9292c6" Padding="2"/>
+                    <StackLayout.GestureRecognizers>
+                        <SwipeGestureRecognizer Direction="Up" Swiped="SwipeCarrito"/>
+                    </StackLayout.GestureRecognizers>
                 </StackLayout>
             </Frame>
+
         </Grid>
+        
+        <!--detalles de carrito-->
+        <StackLayout x:Name="detallesDeCarrito" IsVisible="{Binding VisibleCarrito}" >
+            <StackLayout.GestureRecognizers>
+                <SwipeGestureRecognizer Direction="Down" Swiped="SwipeCompras"/>
+            </StackLayout.GestureRecognizers>
+            <Label Text="Carrito" TextColor="#565b77" FontSize="36" Margin="30,20" FontAttributes="Bold" HeightRequest="40"
+                   WidthRequest="150"/>
+            <Frame CornerRadius="20" Margin="5,0" BackgroundColor="#565b77" HeightRequest="200" >
+                    <CollectionView VerticalOptions="Center" ItemsSource="{Binding ListaCompraCarrito}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Margin="0,3" Orientation="Horizontal">
+                                <Grid>
+                                    <Frame BackgroundColor="#9292c6" CornerRadius="30" HorizontalOptions="Center" VerticalOptions="Center">
+                                        
+                                    </Frame>
+                                    <Image Source="{Binding Img}" WidthRequest="5" Margin="0,8"/>
+                                </Grid>
+                                <Label Text="x" TextColor="#dbd4f6" VerticalOptions="Center"/>
+                                <Label Text="{Binding Cantidad}" TextColor="#dbd4f6" VerticalOptions="Center"/>
+                                <Label Text="    " TextColor="#dbd4f6" VerticalOptions="Center"/>
+                                <Label Text="{Binding Descripcion}" TextColor="#dbd4f6" VerticalOptions="Center"/>
+                                <Label Text="{Binding Total}" TextColor="#dbd4f6" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Frame>
+            
+            <Frame Margin="20,20" BackgroundColor="#262531" CornerRadius="10">
+                <StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Costo de envio:" FontSize="15" Margin="0,20" FontAttributes="Bold" TextColor="#9292c6" HorizontalOptions="StartAndExpand"/>
+                        <Label Text="{Binding StringEnvio}" FontSize="15"  TextColor="#9292c6" Margin="0,20" FontAttributes="Bold" HorizontalOptions="End"/>
+                    </StackLayout>
+                    <StackLayout>
+                        <Label Text="* Compras mayores a $5000 es gratis el envio" FontSize="10" HorizontalOptions="Center" FontAttributes="Bold" TextColor="#565b77"/>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+            <StackLayout HorizontalOptions="FillAndExpand">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Total: " FontSize="35" Margin="50,20" FontAttributes="Bold" TextColor="#9292c6" HorizontalOptions="StartAndExpand"
+                           VerticalOptions="Center"/>
+                    <Label Text="{Binding StringCompra}" FontSize="30"  TextColor="#9292c6"  FontAttributes="Bold" HorizontalOptions="EndAndExpand" Margin="0,0,50,0"
+                           VerticalOptions="Center"/>
+                </StackLayout>
+                <Button Text="Comprar" CornerRadius="30" Background="#262531" TextColor="#dbd4f6" VerticalOptions="End" Margin="30,40"
+                    HeightRequest="65" Command="{Binding ComprarAsyncommand}"/>
+            </StackLayout>
+        </StackLayout>
     </StackLayout>
 </ContentPage>

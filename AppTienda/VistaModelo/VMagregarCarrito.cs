@@ -38,6 +38,11 @@ namespace AppTienda.VistaModelo
         }
         #endregion
         #region PROCESOS
+        //public async Task ValidarCompra()
+        //{
+        //    var funcion = new DcompraCarrito();
+            
+        //}
         public  async Task InsertarCarrito()
         {
             if (Cantidad == 0)

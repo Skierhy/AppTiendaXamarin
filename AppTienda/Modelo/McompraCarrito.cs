@@ -14,5 +14,9 @@ namespace AppTienda.Modelo
 
         public string PrecioProducto { get; set; }
 
+        public string Img { get; set; }
+
+        public string Descripcion { get; set; }
+
     }
 }
