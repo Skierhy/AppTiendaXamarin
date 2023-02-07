@@ -1,7 +1,8 @@
-﻿using System;
+﻿using AppTienda.Vista;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-
+using Plugin.SharedTransitions;
 namespace AppTienda
 {
     public partial class App : Application
@@ -10,7 +11,7 @@ namespace AppTienda
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new SharedTransitionNavigationPage( new Vcompras());
         }
 
         protected override void OnStart()

@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppTienda.Vista.VagregarCarrito"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:sharedTransitions="clr-namespace:Plugin.SharedTransitions;assembly=Plugin.SharedTransitions"
+             >
+
+    <!--.color1 {color: #140f07;}
+    .color2 {color: #262531;}
+    .color3 {color: #565b77;}
+    .color4 {color: #9292c6;}
+    .color5 {color: #dbd4f6;}-->
+    <StackLayout Background="#dbd4f6">
+        <Frame Background="#565b77" CornerRadius="10" Margin="10,10">
+
+            <Grid>
+                <!--<Image Source="https://i.postimg.cc/9FB2rGYT/back-svgrepo-com.png"
+               HeightRequest="35"
+               Margin="15"
+               HorizontalOptions="Start">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Regresarcommand}" />
+                </Image.GestureRecognizers>
+            </Image>-->
+
+                <StackLayout VerticalOptions="Center">
+                    <Label Text="Detalles del producto" HorizontalOptions="Center" FontSize="25" TextColor="#dbd4f6"/>
+                </StackLayout>
+
+            </Grid>
+        </Frame>
+        <StackLayout Padding="20,10" Spacing="20">
+            <Image Source="{Binding EnviarDatosProductos.ImgProducto}"
+                   Margin="10"
+                   HeightRequest="200"
+                   sharedTransitions:Transition.Name="producto"
+                   />
+            <Label Text="{Binding EnviarDatosProductos.Descripcion}" FontAttributes="Bold" FontSize="35" TextColor="#565b77"/>
+            <Label Text="{Binding EnviarDatosProductos.Unidad}" TextColor="#9292c6" Margin="20" FontSize="18"/>
+
+            <StackLayout Orientation="Horizontal">
+                <Grid HorizontalOptions="StartAndExpand" VerticalOptions="Center">
+                    <Frame Padding="0" BackgroundColor="#9292c6" CornerRadius="15" HasShadow="False"
+                           HeightRequest="35" VerticalOptions="Center" WidthRequest="100">
+                    </Frame>
+                    <Label Text="-" FontSize="35" HorizontalOptions="Start" TextColor="#dbd4f6"  Margin="15,-3">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Decrementarcommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Text="{Binding Cantidad}" FontSize="20" HorizontalOptions="Center" TextColor="#565b77"  Margin="15,-8" VerticalOptions="Center" FontAttributes="Bold"/>
+                    <Label Text="+" FontSize="25" HorizontalOptions="End" TextColor="#dbd4f6"  Margin="15,6">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Aumentarcommand }" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </Grid>
+                <Label Text="{Binding Texto}" FontAttributes="Bold" FontSize="35" TextColor="#262531"/>
+            </StackLayout>
+            <!--<Label Text="Descripcion del producto" FontAttributes="Bold" FontSize="25" CharacterSpacing="1"/>
+            <Label Text="Esta es una descripcion en general del producto" FontSize="15"/>-->
+        </StackLayout>
+        <StackLayout VerticalOptions="EndAndExpand">
+            <Button Text="Agregar al carrito" Background="#565b77" CornerRadius="35" Margin="30,25" Command="{Binding InsertarCarritocommand}"/>
+        </StackLayout>
+    </StackLayout>
+</ContentPage>
