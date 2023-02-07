@@ -4,12 +4,12 @@
              x:Class="AppTienda.Vista.Vfinalizado"
              NavigationPage.HasNavigationBar="False"
              >
-    
-        <StackLayout BackgroundColor="#dbd4f6">
-            <Label Text="Compra realizada" HorizontalOptions="Center" VerticalOptions="Center"
+
+    <StackLayout BackgroundColor="#dbd4f6">
+        <Label Text="Compra realizada" HorizontalOptions="Center" VerticalOptions="Center"
                    FontSize="30" Margin="0,100"/>
 
-            <Image Source="https://i.postimg.cc/FRYvkJPV/cheque.png"  VerticalOptions="Center" HorizontalOptions="Center"/>
+        <Image Source="https://i.postimg.cc/FRYvkJPV/cheque.png"  VerticalOptions="Center" HorizontalOptions="Center"/>
 
         <Button Text="Regresar" CornerRadius="20" Margin="20,100" BackgroundColor="#262531" TextColor="#dbd4f6" HeightRequest="80"
                 Command="{Binding Regresarcommand}"/>

@@ -43,7 +43,7 @@
                            TextColor="#dbd4f6"/>
 
                     <Label Text="{Binding Cantidad}" FontSize="20" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="End"
-                           TextColor="#262531" BackgroundColor="#9292c6" Padding="2"/>
+                           TextColor="#262531" BackgroundColor="#9292c6" Padding="10"/>
                     <StackLayout.GestureRecognizers>
                         <SwipeGestureRecognizer Direction="Up" Swiped="SwipeCarrito"/>
                     </StackLayout.GestureRecognizers>
@@ -59,13 +59,16 @@
             </StackLayout.GestureRecognizers>
             <Label Text="Carrito" TextColor="#565b77" FontSize="36" Margin="30,20" FontAttributes="Bold" HeightRequest="40"
                    WidthRequest="150"/>
-            <Frame CornerRadius="20" Margin="5,0" BackgroundColor="#565b77" HeightRequest="200" >
+            <Frame CornerRadius="20" Margin="20,0" BackgroundColor="#565b77" HeightRequest="200" >
+                <StackLayout>
+                    <Label Text="Articulos en el carrito" FontSize="20"  TextColor="#dbd4f6" FontAttributes="Bold" HorizontalOptions="Center"/>
+
                     <CollectionView VerticalOptions="Center" ItemsSource="{Binding ListaCompraCarrito}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <StackLayout Margin="0,3" Orientation="Horizontal">
                                 <Grid>
-                                    <Frame BackgroundColor="#9292c6" CornerRadius="30" HorizontalOptions="Center" VerticalOptions="Center">
+                                    <Frame BackgroundColor="#dbd4f6" CornerRadius="10" HorizontalOptions="Center" VerticalOptions="Center">
                                         
                                     </Frame>
                                     <Image Source="{Binding Img}" WidthRequest="5" Margin="0,8"/>
@@ -74,18 +77,33 @@
                                 <Label Text="{Binding Cantidad}" TextColor="#dbd4f6" VerticalOptions="Center"/>
                                 <Label Text="    " TextColor="#dbd4f6" VerticalOptions="Center"/>
                                 <Label Text="{Binding Descripcion}" TextColor="#dbd4f6" VerticalOptions="Center"/>
-                                <Label Text="{Binding Total}" TextColor="#dbd4f6" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                                    <Label Text="$" TextColor="#dbd4f6" VerticalOptions="Center" Margin="-5,0"/>
+                                    <Label Text="{Binding Total}" TextColor="#dbd4f6" VerticalOptions="Center"/>
+                                </StackLayout>
                             </StackLayout>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
+                </StackLayout>
             </Frame>
             
             <Frame Margin="20,20" BackgroundColor="#262531" CornerRadius="10">
+                
                 <StackLayout>
+                    <Label Text="Informacion de compra" FontSize="20"  TextColor="#9292c6" FontAttributes="Bold" HorizontalOptions="Center"/>
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Costo de envio:" FontSize="15" Margin="0,20" FontAttributes="Bold" TextColor="#9292c6" HorizontalOptions="StartAndExpand"/>
                         <Label Text="{Binding StringEnvio}" FontSize="15"  TextColor="#9292c6" Margin="0,20" FontAttributes="Bold" HorizontalOptions="End"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Subtotal: " FontSize="15" Margin="0,20" FontAttributes="Bold" TextColor="#9292c6" HorizontalOptions="StartAndExpand"/>
+                        
+                        <Label Text="{Binding StringEnvio}" FontSize="15"  TextColor="#9292c6" Margin="0,20" FontAttributes="Bold" HorizontalOptions="End"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Total:" FontSize="25" Margin="0,20" FontAttributes="Bold" TextColor="#9292c6" HorizontalOptions="StartAndExpand"/>
+                        <Label Text="{Binding StringCompra}" FontSize="25"  TextColor="#9292c6" Margin="0,20" FontAttributes="Bold" HorizontalOptions="End"/>
                     </StackLayout>
                     <StackLayout>
                         <Label Text="* Compras mayores a $5000 es gratis el envio" FontSize="10" HorizontalOptions="Center" FontAttributes="Bold" TextColor="#565b77"/>
@@ -93,12 +111,7 @@
                 </StackLayout>
             </Frame>
             <StackLayout HorizontalOptions="FillAndExpand">
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="Total: " FontSize="35" Margin="50,20" FontAttributes="Bold" TextColor="#9292c6" HorizontalOptions="StartAndExpand"
-                           VerticalOptions="Center"/>
-                    <Label Text="{Binding StringCompra}" FontSize="30"  TextColor="#9292c6"  FontAttributes="Bold" HorizontalOptions="EndAndExpand" Margin="0,0,50,0"
-                           VerticalOptions="Center"/>
-                </StackLayout>
+                
                 <Button Text="Comprar" CornerRadius="30" Background="#262531" TextColor="#dbd4f6" VerticalOptions="End" Margin="30,40"
                     HeightRequest="65" Command="{Binding ComprarAsyncommand}"/>
             </StackLayout>
