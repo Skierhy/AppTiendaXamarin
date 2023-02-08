@@ -10,6 +10,8 @@
     .color3 {color: #565b77;}
     .color4 {color: #9292c6;}
     .color5 {color: #dbd4f6;}-->
+    <StackLayout IsVisible="false">
+        
     <StackLayout Background="#dbd4f6">
         <Grid RowDefinitions="*,135" VerticalOptions="FillAndExpand" x:Name="Gmain" IsVisible="{Binding VisibleCompras}">
 
@@ -120,5 +122,6 @@
                     HeightRequest="65" Command="{Binding ComprarAsyncommand}"/>
             </StackLayout>
         </StackLayout>
+    </StackLayout>
     </StackLayout>
 </ContentPage>

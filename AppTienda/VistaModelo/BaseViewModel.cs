@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using System.Runtime.CompilerServices;
 using System.ComponentModel;
+using Xamarin.Essentials;
+
 namespace AppTienda.VistaModelo
 {
     public class BaseViewModel : INotifyPropertyChanged
@@ -90,5 +92,48 @@ namespace AppTienda.VistaModelo
 
             OnPropertyChanged(propertyName);
         }
+
+        #region Validar internet
+        bool _Conectado;
+        bool _NoConectado;
+
+        public bool Conectado
+        {
+            get { return this._Conectado; }
+            set { SetValue(ref this._Conectado, value); }
+        }
+        public bool NoConectado
+        {
+            get { return this._NoConectado; }
+            set { SetValue(ref this._NoConectado, value); }
+        }
+
+        private void ProbarConexion()
+        {
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
+            {
+                Conectado = false;
+                NoConectado = true;
+            }
+            else
+            {
+                Conectado = true;
+                NoConectado = false;
+            }
+        }
+
+        public void ValidarInternet()
+        {
+            var tiempo = TimeSpan.FromSeconds(1);
+            Device.StartTimer(tiempo, () =>
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    ProbarConexion();
+                });
+                return true;
+            });
+        }
+        #endregion
     }
 }

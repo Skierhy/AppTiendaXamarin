@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppTienda.Vista.VsinInternet"
+             NavigationPage.HasNavigationBar="False">
+    <StackLayout BackgroundColor="#dbd4f6">
+        <Label Text="Sin internet..."
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               FontSize="30"
+               Margin="0,100" />
+        <Image Source="sinconexion.png"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               Margin="50"/>
+    </StackLayout>
+</ContentPage>
