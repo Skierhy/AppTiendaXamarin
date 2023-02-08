@@ -21,9 +21,10 @@ namespace AppTienda.VistaModelo
         double totalProductos =0;
         double compra = 0;
         int _Cantidad;
-        string _stringTotalProductos = "Subtotal: $ 0";
-        string _stringCompra = "$ 0";
-        string _stringEnvio = "$ 0";
+        string _stringTotalProductos = "Subtotal: $0";
+        string _StringTotalCarrito = "$0";
+        string _stringCompra = "$0";
+        string _stringEnvio = "$0";
         bool _VisibleCarrito;
         bool _VisibleCompras;
         #endregion
@@ -63,6 +64,12 @@ namespace AppTienda.VistaModelo
         {
             get { return _stringTotalProductos; }
             set { SetValue(ref _stringTotalProductos, value); }
+        }
+
+        public string StringTotalCarrito
+        {
+            get { return _StringTotalCarrito; }
+            set { SetValue(ref _StringTotalCarrito, value); }
         }
 
         public bool VisibleCarrito
@@ -222,16 +229,17 @@ namespace AppTienda.VistaModelo
                 totalProductos += Convert.ToDouble( item.Total);
                 Cantidad++;
             }
-            StringTotalProductos = "Subtotal $ " + totalProductos;
+            StringTotalProductos = "Subtotal: $" + totalProductos;
+            StringTotalCarrito = "$" + totalProductos;
 
             if (totalProductos >= 5000) {
-                StringCompra = "$ " + totalProductos;
+                StringCompra = "$" + totalProductos;
                 StringEnvio = "Gratis";
             }else if (totalProductos < 5000)
             {
                 if (Cantidad >= 1) {
                     compra = totalProductos + 2000;
-                    StringCompra = "$ " + compra;
+                    StringCompra = "$" + compra;
                     StringEnvio = "$2000";
                 }
                 

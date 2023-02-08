@@ -21,7 +21,7 @@ namespace AppTienda.VistaModelo
         {
             Navigation = navigation;
             EnviarDatosProductos = EnviarProductos;
-            Texto = "$"+ EnviarDatosProductos.Precio;
+            Texto = "$0";
         }
         #endregion
         #region OBJETOS
@@ -48,6 +48,8 @@ namespace AppTienda.VistaModelo
             if (Cantidad == 0)
             {
                 Cantidad = 1;
+                double Precio = Convert.ToDouble(EnviarDatosProductos.Precio) * Cantidad;
+                Texto = "$" + Precio;
             }
             var funcion = new DcompraCarrito();
             var recibirCarrito = new McompraCarrito();
@@ -69,12 +71,16 @@ namespace AppTienda.VistaModelo
         public void Aumentar()
         {
             Cantidad += 1;
+            double Precio = Convert.ToDouble(EnviarDatosProductos.Precio) * Cantidad;
+            Texto = "$" + Precio;
         }
         public void Decrementar()
         {
-            if (Cantidad >= 0)
+            if (Cantidad >= 1)
             {
                 Cantidad -= 1;
+                double Precio = Convert.ToDouble(EnviarDatosProductos.Precio) * Cantidad;
+                Texto = "$" + Precio;
             }
         }
         #endregion
