@@ -18,7 +18,7 @@ namespace AppTienda.VistaModelo
         List<Mproductos> _ListaProductos;
         List<McompraCarrito> _ListaCompraCarritoTotal;
         List<McompraCarrito> _ListaCompraCarrito;
-        double totalProductos =0;
+        double totalProductos = 0;
         double compra = 0;
         int _Cantidad;
         string _stringTotalProductos = "Subtotal: $0";
@@ -99,39 +99,73 @@ namespace AppTienda.VistaModelo
         #endregion
         #region PROCESOS
 
-        public async Task MostrarCarrito() {
-            var funcion = new DcompraCarrito();
-            ListaCompraCarrito = await funcion.MostrarCarrito();
+        public async Task MostrarCarrito()
+        {
+            try
+            {
+                var funcion = new DcompraCarrito();
+                ListaCompraCarrito = await funcion.MostrarCarrito();
+
+            }
+            catch (Exception ex)
+            {
+                await Navigation.PushAsync(new Verror());
+            }
         }
 
-        public  async Task  MostrarCarrito(Grid Gmain, Frame fTotal, StackLayout detallesDeCarrito)
+        public async Task MostrarCarrito(Grid Gmain, Frame fTotal, StackLayout detallesDeCarrito)
         {
-            await Task.WhenAll(
-                fTotal.FadeTo(0, 500),
-                Gmain.TranslateTo(0, -1000, 500, Easing.CubicIn),
-                detallesDeCarrito.TranslateTo(0, 0, 500, Easing.CubicIn)
-                );
-            VisibleCompras = false;
-            VisibleCarrito = true;
+            try
+            {
+
+                await Task.WhenAll(
+                    fTotal.FadeTo(0, 500),
+                    Gmain.TranslateTo(0, -1000, 500, Easing.CubicIn),
+                    detallesDeCarrito.TranslateTo(0, 0, 500, Easing.CubicIn)
+                    );
+                VisibleCompras = false;
+                VisibleCarrito = true;
+            }
+            catch (Exception ex)
+            {
+                await Navigation.PushAsync(new Verror());
+            }
         }
 
         public async Task MostrarCompras(Grid Gmain, Frame fTotal, StackLayout detallesDeCarrito)
         {
-            await Task.WhenAll(
-                fTotal.FadeTo(1, 500),
-                Gmain.TranslateTo(0, 0, 500, Easing.CubicIn),
-                detallesDeCarrito.TranslateTo(0, 1000, 500, Easing.CubicIn)
-                );
-            VisibleCompras = true;
-            VisibleCarrito = false;
+            try
+            {
+
+                await Task.WhenAll(
+                    fTotal.FadeTo(1, 500),
+                    Gmain.TranslateTo(0, 0, 500, Easing.CubicIn),
+                    detallesDeCarrito.TranslateTo(0, 1000, 500, Easing.CubicIn)
+                    );
+                VisibleCompras = true;
+                VisibleCarrito = false;
+            }
+            catch (Exception ex)
+            {
+                await Navigation.PushAsync(new Verror());
+            }
         }
         public async Task MostrarProductos(StackLayout StackLayout1)
         {
-            var funcion = new Dproductos();
+            try
+            {
+                var funcion = new Dproductos();
 
-            ListaProductos = await funcion.MostrarProductos();
-            foreach (var item in ListaProductos) {
-                DibujarProductos(item, StackLayout1);
+                ListaProductos = await funcion.MostrarProductos();
+                foreach (var item in ListaProductos)
+                {
+                    DibujarProductos(item, StackLayout1);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                await Navigation.PushAsync(new Verror());
             }
         }
         public void DibujarProductos(Mproductos item, StackLayout StackLayout1)
@@ -219,44 +253,64 @@ namespace AppTienda.VistaModelo
         }
         public async Task MostrarTotal()
         {
-            var funcion = new DcompraCarrito();
-            ListaCompraCarritoTotal = await funcion.MostrarTotal();
-            totalProductos = 0;
-            Cantidad = 0;
-            compra = 0;
-            foreach (var item in ListaCompraCarritoTotal)
+            try
             {
-                totalProductos += Convert.ToDouble( item.Total);
-                Cantidad++;
-            }
-            StringTotalProductos = "Subtotal: $" + totalProductos;
-            StringTotalCarrito = "$" + totalProductos;
 
-            if (totalProductos >= 5000) {
-                StringCompra = "$" + totalProductos;
-                StringEnvio = "Gratis";
-            }else if (totalProductos < 5000)
-            {
-                if (Cantidad >= 1) {
-                    compra = totalProductos + 2000;
-                    StringCompra = "$" + compra;
-                    StringEnvio = "$2000";
+                var funcion = new DcompraCarrito();
+                ListaCompraCarritoTotal = await funcion.MostrarTotal();
+                totalProductos = 0;
+                Cantidad = 0;
+                compra = 0;
+                foreach (var item in ListaCompraCarritoTotal)
+                {
+                    totalProductos += Convert.ToDouble(item.Total);
+                    Cantidad++;
                 }
-                
+                StringTotalProductos = "Subtotal: $" + totalProductos;
+                StringTotalCarrito = "$" + totalProductos;
+
+                if (totalProductos >= 5000)
+                {
+                    StringCompra = "$" + totalProductos;
+                    StringEnvio = "Gratis";
+                }
+                else if (totalProductos < 5000)
+                {
+                    if (Cantidad >= 1)
+                    {
+                        compra = totalProductos + 2000;
+                        StringCompra = "$" + compra;
+                        StringEnvio = "$2000";
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                await Navigation.PushAsync(new Verror());
             }
         }
         public async Task ComprarCarrito()
         {
-            if(Cantidad == 0)
+            try
+            {
+
+                if (Cantidad == 0)
+                {
+                    await Navigation.PushAsync(new Verror());
+                }
+                else
+                {
+                    var funcion = new Dproductos();
+                    await funcion.ComprarCarrito();
+                    await Navigation.PushAsync(new Vfinalizado());
+                }
+            }
+            catch (Exception ex)
             {
                 await Navigation.PushAsync(new Verror());
             }
-            else {
-                var funcion = new Dproductos();
-                await funcion.ComprarCarrito();
-                await Navigation.PushAsync(new Vfinalizado());
-            }
-            
+
         }
         #endregion
         #region COMANDOS

@@ -1,5 +1,6 @@
 ﻿using AppTienda.Datos;
 using AppTienda.Modelo;
+using AppTienda.Vista;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,7 +10,7 @@ using Xamarin.Forms;
 
 namespace AppTienda.VistaModelo
 {
-    public class VMagregarCarrito:BaseViewModel
+    public class VMagregarCarrito : BaseViewModel
     {
         #region VARIABLES
         string _Texto;
@@ -22,6 +23,9 @@ namespace AppTienda.VistaModelo
             Navigation = navigation;
             EnviarDatosProductos = EnviarProductos;
             Texto = "$0";
+            Cantidad = 1;
+            double Precio = Convert.ToDouble(EnviarDatosProductos.Precio) * Cantidad;
+            Texto = "$" + Precio;
         }
         #endregion
         #region OBJETOS
@@ -41,32 +45,51 @@ namespace AppTienda.VistaModelo
         //public async Task ValidarCompra()
         //{
         //    var funcion = new DcompraCarrito();
-            
+
         //}
-        public  async Task InsertarCarrito()
+        public async Task InsertarCarrito()
         {
-            if (Cantidad == 0)
+            try
             {
-                Cantidad = 1;
-                double Precio = Convert.ToDouble(EnviarDatosProductos.Precio) * Cantidad;
-                Texto = "$" + Precio;
+                if (Cantidad == 0)
+                {
+                    //Cantidad = 1;
+                    //double Precio = Convert.ToDouble(EnviarDatosProductos.Precio) * Cantidad;
+                    //Texto = "$" + Precio;
+                    await Navigation.PushAsync(new Verror());
+                }
+                if (Cantidad >= 1)
+                {
+                    var funcion = new DcompraCarrito();
+                    var recibirCarrito = new McompraCarrito();
+                    recibirCarrito.Cantidad = Cantidad.ToString();
+                    recibirCarrito.IdProducto = EnviarDatosProductos.IdProducto;
+                    recibirCarrito.PrecioUnidad = EnviarDatosProductos.Precio;
+                    double total = 0;
+                    double precioCompra = Convert.ToDouble(EnviarDatosProductos.Precio);
+                    double cantidad = Convert.ToDouble(Cantidad);
+                    total = precioCompra * cantidad;
+                    recibirCarrito.Total = total.ToString();
+                    await funcion.InsertarCarrito(recibirCarrito);
+                    await Volver();
+                }
             }
-            var funcion = new DcompraCarrito();
-            var recibirCarrito = new McompraCarrito();
-            recibirCarrito.Cantidad = Cantidad.ToString();
-            recibirCarrito.IdProducto = EnviarDatosProductos.IdProducto;
-            recibirCarrito.PrecioUnidad = EnviarDatosProductos.Precio;
-            double total = 0;
-            double precioCompra = Convert.ToDouble(EnviarDatosProductos.Precio);
-            double cantidad = Convert.ToDouble(Cantidad);
-            total = precioCompra * cantidad;
-            recibirCarrito.Total = total.ToString();
-            await funcion.InsertarCarrito(recibirCarrito);
-            await Volver();
+            catch (Exception ex)
+            {
+                await Navigation.PushAsync(new Verror());
+            }
         }
         public async Task Volver()
         {
-            await Navigation.PopAsync();
+            try
+            {
+
+                await Navigation.PopAsync();
+            }
+            catch (Exception ex)
+            {
+                await Navigation.PushAsync(new Verror());
+            }
         }
         public void Aumentar()
         {
@@ -89,7 +112,7 @@ namespace AppTienda.VistaModelo
         public ICommand Aumentarcommand => new Command(Aumentar);
         public ICommand Decrementarcommand => new Command(Decrementar);
         public ICommand InsertarCarritocommand => new Command(async () => await InsertarCarrito());
-        
+
 
         #endregion
     }
