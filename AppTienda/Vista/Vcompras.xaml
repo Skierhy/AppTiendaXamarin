@@ -103,8 +103,7 @@
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Subtotal: " FontSize="15" Margin="0,20" FontAttributes="Bold" TextColor="#9292c6" HorizontalOptions="StartAndExpand"/>
-
-                        <Label Text="{Binding StringEnvio}" FontSize="15"  TextColor="#9292c6" Margin="0,20" FontAttributes="Bold" HorizontalOptions="End"/>
+                        <Label Text="{Binding StringTotalCarrito}" FontSize="15"  TextColor="#9292c6" Margin="0,20" FontAttributes="Bold" HorizontalOptions="End"/>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Total:" FontSize="25" Margin="0,20" FontAttributes="Bold" TextColor="#9292c6" HorizontalOptions="StartAndExpand"/>
